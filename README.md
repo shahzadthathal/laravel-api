@@ -14,7 +14,7 @@ Comprehensive API responses.
 ## Installation
 Clone the repository:
 
-git clone https://github.com/yourusername/laravel-api.git
+git clone https://github.com/shahzadthathal/laravel-api
 
 cd laravel-api
 

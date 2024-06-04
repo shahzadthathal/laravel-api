@@ -42,25 +42,29 @@ Serve the application:
 
 php artisan serve
 
-# Usage Swagger
+# API Documentation:
 
-Access the interactive API documentation at /api/swagger.
+Access the interactive API documentation at /api/swagger
 
 http://127.0.0.1:8000/api/swagger
 
 # API Authentication:
 
 Register a user: /api/register
+
 Login a user: /api/login
+
 Protected Routes:
 
 Accessible only with a valid Sanctum token.
+
 Examples: /api/categories (store, update, delete)
+
 Public Routes:
 
 Accessible without authentication.
 Examples: /api/categories (index, show)
-API Documentation:
+
 
 # Contributing
 Contributions are welcome! Please open an issue or submit a pull request for any improvements, bug fixes, or new features.

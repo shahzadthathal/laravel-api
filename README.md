@@ -14,56 +14,54 @@ Comprehensive API responses.
 ## Installation
 Clone the repository:
 
-git clone https://github.com/shahzadthathal/laravel-api
+`git clone https://github.com/shahzadthathal/laravel-api`
 
-cd laravel-api
+`cd laravel-api`
 
 # Install dependencies:
 
-composer install
+`composer install`
 
-Environment setup:
+# Environment setup:
 
 cp .env.example .env
 
 php artisan key:generate
 
 Configure your database settings in the .env file.
+Also update L5_SWAGGER_CONST_HOST variable for swagger if needed.
+
 
 # Run migrations:
 
-php artisan migrate
+`php artisan migrate --seed`
 
-Seed the database (if applicable):
+# Serve the application:
 
-php artisan db:seed
-
-Serve the application:
-
-php artisan serve
+`php artisan serve`
 
 # API Documentation:
 
-Access the interactive API documentation at /api/swagger
+Access the interactive API documentation at `/api/swagger`
 
-http://127.0.0.1:8000/api/swagger
+`http://127.0.0.1:8000/api/swagger`
 
 # API Authentication:
 
-Register a user: /api/register
+Register a user: `/api/register`
 
-Login a user: /api/login
+Login a user: `/api/login`
 
 Protected Routes:
 
 Accessible only with a valid Sanctum token.
 
-Examples: /api/categories (store, update, delete)
+Examples: `/api/categories (store, update, delete)`
 
 Public Routes:
 
 Accessible without authentication.
-Examples: /api/categories (index, show)
+Examples: `/api/categories (index, show)`
 
 
 # Contributing

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 use App\Interfaces\IComment;
 use App\Interfaces\IPost;
+use App\Interfaces\IProduct;
 use App\Http\Requests\Comment\StoreCommentRequest;
 use App\Http\Resources\CommentResource;
 use App\Models\Post;
@@ -23,11 +24,13 @@ class CommentController extends Controller
 
     private IComment $commentRepo;
     private IPost $postRepo;
+    private IProduct $productRepo;
 
-    public function __construct(IComment $iComment, IPost $iPost)
+    public function __construct(IComment $iComment, IPost $iPost, IProduct $iProduct)
     {
         $this->commentRepo = $iComment;
         $this->postRepo = $iPost;
+        $this->productRepo = $iProduct;
     }
 
     /**
@@ -130,14 +133,14 @@ class CommentController extends Controller
      */
     public function StoreCommentForProduct(StoreCommentRequest $request, $productId)
     {
-        if(!$this->productRepo->exists($postId)){
+        if(!$this->productRepo->exists($productId)){
             return ApiResponseClass::throw('','Product not exists');
         }
         
         $details = [
-                    'name' => $request->input('body'),
+                    'body' => $request->input('body'),
                     'user_id' => Auth::id(), // Get the authenticated user ID
-                    'commentable_id' => $postId,
+                    'commentable_id' => $productId,
                     'commentable_type' => 'App\Models\Product'
                 ];
         DB::beginTransaction();

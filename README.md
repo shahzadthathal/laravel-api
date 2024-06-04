@@ -3,15 +3,19 @@ Welcome to the Laravel API repository! This project showcases a robust implement
 
 ## Features
 Laravel Sanctum Authentication: 
+
 Secure authentication for your API using Laravel Sanctum, ensuring safe access to protected routes.
 
 OpenAPI/Swagger Integration: 
+
 Detailed API documentation powered by OpenAPI/Swagger, providing a clear and interactive interface for developers.
 
 Polymorphic Relationships: 
+
 Flexible data modeling with Laravel's polymorphic relationships, allowing Category to belong to both Post and Product models.
 
 Best Practices: 
+
 Follows Laravel's best practices, including:
 Clean and organized code structure.
 Exception handling and transaction management.

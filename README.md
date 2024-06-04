@@ -31,12 +31,12 @@ Clone the repository:
 
 # Environment setup:
 
-cp .env.example .env
+`cp .env.example .env`
 
-php artisan key:generate
+`php artisan key:generate`
 
 Configure your database settings in the .env file.
-Also update L5_SWAGGER_CONST_HOST variable for swagger if needed.
+Also update `L5_SWAGGER_CONST_HOST` variable for swagger url if needed.
 
 
 # Run migrations:

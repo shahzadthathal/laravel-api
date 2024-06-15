@@ -15,16 +15,13 @@ class PostResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-       // return parent::toArray($request);
-
         return [
             'id' =>$this->id,
             'title' => $this->title,
             'slug' => $this->slug,
             'description' => $this->description,
             'feature_image_url' => $this->feature_image_url,
-            'category' => new CategoryResource($this->category), // Assuming CategoryResource exists
-            // Include comments
+            'category' => new CategoryResource($this->category),
             'comments' => CommentResource::collection($this->whenLoaded('comments')),
         ];
     }

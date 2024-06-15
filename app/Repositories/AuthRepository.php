@@ -16,7 +16,7 @@ class AuthRepository implements IAuth
             'name'      => $data['name'],
             'email'     => $data['email'],
             'password'  => Hash::make($data['password'])
-        ]); 
+        ]);
     }
 
     public function findByEmail(string $email)

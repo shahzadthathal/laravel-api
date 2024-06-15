@@ -50,7 +50,6 @@ class ProductController extends Controller
     public function index()
     {
         $data = $this->productRepo->index();
-
         return ApiResponseClass::sendResponse(ProductResource::collection($data),'',200);
     }
 
@@ -80,11 +79,9 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-
         if(!$this->categoryRepo->exists($request->category_id)){
             return ApiResponseClass::throw('','Category not exists');
-        }
-        
+        }   
         $details = [
             'title' => $request->input('title'),
             'price' => $request->input('price'),
@@ -94,17 +91,13 @@ class ProductController extends Controller
             'category_id' => $request->input('category_id'),
             'feature_image_url' => $request->input('feature_image_url'),
         ];
-
-       
         DB::beginTransaction();
         try{
             $model = $this->productRepo->store($details);
-
             DB::commit();
             return ApiResponseClass::sendResponse(new ProductResource($model),'Product Create Successful',201);
-
         }catch(\Exception $ex){
-            return ApiResponseClass::rollback($ex);
+            ApiResponseClass::rollback($ex);
         }
     }
 
@@ -139,7 +132,6 @@ class ProductController extends Controller
     public function show($id)
     {
         $model = $this->productRepo->getById($id);
-
         return ApiResponseClass::sendResponse(new ProductResource($model),'',200);
     }
 
@@ -194,7 +186,6 @@ class ProductController extends Controller
         if(!$this->categoryRepo->exists($request->category_id)){
             return ApiResponseClass::throw('','Category not exists');
         }
-
         $updateDetails = [
             'title' => $request->input('title'),
             'price' => $request->input('price'),
@@ -204,16 +195,13 @@ class ProductController extends Controller
             'category_id' => $request->input('category_id'),
             'feature_image_url' => $request->input('feature_image_url'),
         ];
-        
         DB::beginTransaction();
         try{
-            $model = $this->productRepo->update($updateDetails,$id);
-
+            $this->productRepo->update($updateDetails,$id);
             DB::commit();
             return ApiResponseClass::sendResponse('Product Update Successful','',201);
-
         }catch(\Exception $ex){
-            return ApiResponseClass::rollback($ex);
+            ApiResponseClass::rollback($ex);
         }
     }
 
@@ -251,7 +239,6 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $this->productRepo->delete($id);
-
         return ApiResponseClass::sendResponse('Product Delete Successful','',204);
     }
 

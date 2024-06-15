@@ -13,14 +13,13 @@ class ProductControllerTest extends TestCase
 
     public function test_can_get_list_of_products()
     {
-        $response = $this->get('/api/products');
+        $response = $this->get(config('constants.API_PRODUCT_PATH'));
         $response->assertStatus(200);
     }
 
     public function test_can_create_product()
     {
         $category = Category::factory()->create();
-        
         $data = [
             'title' => 'Example Product Title',
             'price' => 10,
@@ -31,27 +30,22 @@ class ProductControllerTest extends TestCase
             'category_id' => $category->id,
             'description' => 'This is an example description of the post.'
         ];
-
-        $response = $this->post('/api/products', $data);
+        $response = $this->post(config('constants.API_PRODUCT_PATH'), $data);
         $response->assertStatus(201);
     }
 
     public function test_can_get_product_by_id()
     {
-        $category = Category::factory()->create();
-
+        Category::factory()->create();
         $product = Product::factory()->create();
-
-        $response = $this->get('/api/products/' . $product->id);
+        $response = $this->get(config('constants.API_PRODUCT_PATH') . $product->id);
         $response->assertStatus(200);
     }
 
     public function test_can_update_product()
     {
         $category = Category::factory()->create();
-
         $product = Product::factory()->create();
-
         $data = [
             'title' => 'Example Product Title Updated',
             'price' => 10,
@@ -62,17 +56,15 @@ class ProductControllerTest extends TestCase
             'category_id' => $category->id,
             'description' => 'This is an example description of the post.'
         ];
-
-        $response = $this->put('/api/products/' . $product->id, $data);
+        $response = $this->put(config('constants.API_PRODUCT_PATH') . $product->id, $data);
         $response->assertStatus(201);
     }
 
     public function test_can_delete_product()
     {
-        $category = Category::factory()->create();
+        Category::factory()->create();
         $product = Product::factory()->create();
-
-        $response = $this->delete('/api/products/' . $product->id);
+        $response = $this->delete(config('constants.API_PRODUCT_PATH') . $product->id);
         $response->assertStatus(204);
     }
 }

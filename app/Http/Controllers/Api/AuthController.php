@@ -43,7 +43,8 @@ class AuthController extends Controller
      *     )
      * )
      */
-    public function register(RegisterUserRequest $request){
+    public function register(RegisterUserRequest $request)
+    {
         $details = [
             'name' => $request->input('name'),
             'email' => $request->input('email'),
@@ -54,11 +55,10 @@ class AuthController extends Controller
             $model = $this->authRepo->register($details);
             $token = $model->createToken('auth_token')->plainTextToken;
             $model->token = $token;
-
-            DB::commit();            
+            DB::commit();
             return ApiResponseClass::sendResponse(new UserResource($model), 'User created successful', 201);
         } catch (\Exception $ex) {
-            return ApiResponseClass::rollback($ex);
+            ApiResponseClass::rollback($ex);
         }
     }
 
@@ -80,23 +80,22 @@ class AuthController extends Controller
      *     )
      * )
      */
-    public function login(LoginUserRequest $request){
-        
+    public function login(LoginUserRequest $request)
+    {
         $credentials    =   $request->only('email', 'password');
-        if (!Auth::attempt($credentials)) 
+        if (!Auth::attempt($credentials))
         {
             return ApiResponseClass::throw('','Invalid username/password.');
         }
-
         DB::beginTransaction();
         try {
             $model = $this->authRepo->findByEmail($request->email);
             $token  = $model->createToken('auth_token')->plainTextToken;
             $model->token = $token;
-            DB::commit();            
+            DB::commit();
             return ApiResponseClass::sendResponse(new UserResource($model), 'User login successful', 201);
         } catch (\Exception $ex) {
-            return ApiResponseClass::rollback($ex);
+            ApiResponseClass::rollback($ex);
         }
     }
 
@@ -114,14 +113,14 @@ class AuthController extends Controller
      *     )
      * )
      */
-    public function logout(){
-
+    public function logout()
+    {
         DB::beginTransaction();
         try {
             Auth::user()->tokens()->delete();
             return ApiResponseClass::throw('','User logout successfull');
         } catch (\Exception $ex) {
-            return ApiResponseClass::rollback($ex);
+            ApiResponseClass::rollback($ex);
         }
     }
     

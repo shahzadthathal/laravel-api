@@ -71,7 +71,7 @@ class CategoryController extends Controller
             DB::commit();
             return ApiResponseClass::sendResponse(new CategoryResource($model), 'Category Create Successful', 201);
         } catch (\Exception $ex) {
-            return ApiResponseClass::rollback($ex);
+            ApiResponseClass::rollback($ex);
         }
     }
 
@@ -142,11 +142,11 @@ class CategoryController extends Controller
         $updateDetails = ['name' => $request->name];
         DB::beginTransaction();
         try {
-            $model = $this->categoryRepo->update($updateDetails, $id);
+            $this->categoryRepo->update($updateDetails, $id);
             DB::commit();
             return ApiResponseClass::sendResponse('Category Update Successful', '', 201);
         } catch (\Exception $ex) {
-            return ApiResponseClass::rollback($ex);
+            ApiResponseClass::rollback($ex);
         }
     }
 

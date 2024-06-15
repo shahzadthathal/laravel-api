@@ -72,11 +72,10 @@ class CommentController extends Controller
      * )
      */
     public function StoreCommentForPost(StoreCommentRequest $request, $postId)
-    {        
+    {
         if(!$this->postRepo->exists($postId)){
             return ApiResponseClass::throw('','Post not exists');
         }
-
         $details = [
                     'body' => $request->input('body'),
                     'user_id' => Auth::id(), // Get the authenticated user ID
@@ -89,7 +88,7 @@ class CommentController extends Controller
             DB::commit();
             return ApiResponseClass::sendResponse(new CommentResource($model), 'Comment saved successful', 201);
         } catch (\Exception $ex) {
-            return ApiResponseClass::rollback($ex);
+            ApiResponseClass::rollback($ex);
         }
     }
 
@@ -136,7 +135,6 @@ class CommentController extends Controller
         if(!$this->productRepo->exists($productId)){
             return ApiResponseClass::throw('','Product not exists');
         }
-        
         $details = [
                     'body' => $request->input('body'),
                     'user_id' => Auth::id(), // Get the authenticated user ID
@@ -149,8 +147,7 @@ class CommentController extends Controller
             DB::commit();
             return ApiResponseClass::sendResponse(new CommentResource($model), 'Comment saved successful', 201);
         } catch (\Exception $ex) {
-            return ApiResponseClass::rollback($ex);
+            ApiResponseClass::rollback($ex);
         }
-
     }
 }

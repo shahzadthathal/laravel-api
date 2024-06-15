@@ -13,7 +13,7 @@ class PostPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return $user->isAuthenticated(); 
     }
 
     /**
@@ -21,7 +21,7 @@ class PostPolicy
      */
     public function view(User $user, Post $post): bool
     {
-        //
+        return $user->id === $post->user_id || $user->isAdmin();
     }
 
     /**
@@ -29,7 +29,7 @@ class PostPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->isAuthenticated();
     }
 
     /**
@@ -37,7 +37,7 @@ class PostPolicy
      */
     public function update(User $user, Post $post): bool
     {
-        //
+        return $user->id === $post->user_id;
     }
 
     /**
@@ -45,15 +45,17 @@ class PostPolicy
      */
     public function delete(User $user, Post $post): bool
     {
-        //
+        return $user->id === $post->user_id || $user->isAdmin();
     }
 
+    
     /**
      * Determine whether the user can restore the model.
      */
     public function restore(User $user, Post $post): bool
     {
-        //
+        // Example logic: Allow the user to restore the post if they are an admin or the post is soft-deleted
+        return $user->isAdmin() || $post->trashed();
     }
 
     /**
@@ -61,6 +63,9 @@ class PostPolicy
      */
     public function forceDelete(User $user, Post $post): bool
     {
-        //
+        // Example logic: Allow the user to permanently delete the post if they are an admin
+        // or the post is already deleted (soft-deleted)
+        return $user->isAdmin() || $post->trashed();
     }
+
 }

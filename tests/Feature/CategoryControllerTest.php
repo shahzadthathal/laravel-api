@@ -12,7 +12,7 @@ class CategoryControllerTest extends TestCase
 
     public function test_can_get_list_of_categories()
     {
-        $response = $this->get('/api/categories');
+        $response = $this->get(config('constants.API_CATEGORY_PATH'));
         $response->assertStatus(200);
     }
 
@@ -21,27 +21,23 @@ class CategoryControllerTest extends TestCase
         $data = [
             'name' => 'Test Category',
         ];
-
-        $response = $this->post('/api/categories', $data);
+        $response = $this->post(config('constants.API_CATEGORY_PATH'), $data);
         $response->assertStatus(201);
     }
 
     public function test_can_get_category_by_id()
     {
         $category = Category::factory()->create();
-
-        $response = $this->get('/api/categories/' . $category->id);
+        $response = $this->get(config('constants.API_CATEGORY_PATH') . $category->id);
         $response->assertStatus(200);
     }
 
     public function test_can_update_category()
     {
         $category = Category::factory()->create();
-
         $data = [
             'name' => 'Updated Category Name',
         ];
-
         $response = $this->put('/api/categories/' . $category->id, $data);
         $response->assertStatus(201);
     }
@@ -49,7 +45,6 @@ class CategoryControllerTest extends TestCase
     public function test_can_delete_category()
     {
         $category = Category::factory()->create();
-
         $response = $this->delete('/api/categories/' . $category->id);
         $response->assertStatus(204);
     }

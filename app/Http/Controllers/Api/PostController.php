@@ -52,7 +52,6 @@ class PostController extends Controller
     public function index()
     {
         $data = $this->postRepo->index();
-
         return ApiResponseClass::sendResponse(PostResource::collection($data),'',200);
     }
 
@@ -82,10 +81,10 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        if(!$this->categoryRepo->exists($request->category_id)){
+        if(!$this->categoryRepo->exists($request->category_id))
+        {
             return ApiResponseClass::throw('','Category not exists');
         }
-
         $details =[
             'title' => $request->input('title'),
             'status' => $request->input('status'),
@@ -93,16 +92,13 @@ class PostController extends Controller
             'feature_image_url' => $request->input('feature_image_url'),
             'description' => $request->input('description'),
         ];
-        
         DB::beginTransaction();
         try{
              $model = $this->postRepo->store($details);
-
              DB::commit();
              return ApiResponseClass::sendResponse(new PostResource($model),'Post Create Successful',201);
-
         }catch(\Exception $ex){
-            return ApiResponseClass::rollback($ex);
+            ApiResponseClass::rollback($ex);
         }
     }
 
@@ -136,7 +132,6 @@ class PostController extends Controller
     public function show($id)
     {
         $model = $this->postRepo->getById($id);
-
         return ApiResponseClass::sendResponse(new PostResource($model),'',200);
     }
 
@@ -185,10 +180,10 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, $id)
     {
-        if(!$this->categoryRepo->exists($request->category_id)){
+        if(!$this->categoryRepo->exists($request->category_id))
+        {
             return ApiResponseClass::throw('','Category not exists');
         }
-        
         $updateDetails =[
             'title' => $request->input('title'),
             'status' => $request->input('status'),
@@ -196,16 +191,13 @@ class PostController extends Controller
             'feature_image_url' => $request->input('feature_image_url'),
             'description' => $request->input('description'),
         ];
-        
         DB::beginTransaction();
         try{
-             $model = $this->postRepo->update($updateDetails,$id);
-
-             DB::commit();
-             return ApiResponseClass::sendResponse('Post Update Successful','',201);
-
+            $this->postRepo->update($updateDetails,$id);
+            DB::commit();
+            return ApiResponseClass::sendResponse('Post Update Successful','',201);
         }catch(\Exception $ex){
-            return ApiResponseClass::rollback($ex);
+            ApiResponseClass::rollback($ex);
         }
     }
 
@@ -242,8 +234,7 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-         $this->postRepo->delete($id);
-
+        $this->postRepo->delete($id);
         return ApiResponseClass::sendResponse('Post Delete Successful','',204);
     }
 }

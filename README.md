@@ -75,6 +75,11 @@ Accessible without authentication.
 Examples: `/api/categories (index, show)`
 
 
+# Generate Swagger Documentation:
+`cd laravel-api`
+`php artisan l5-swagger:generat`
+
+
 # Contributing
 Contributions are welcome! Please open an issue or submit a pull request for any improvements, bug fixes, or new features.
 

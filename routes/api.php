@@ -15,19 +15,19 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/user', function (Request $request) {
     return $request->user();
-})->middleware('auth:sanctum');
+})->middleware(config('constants.AUTH_SANCTUM'));
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(config('constants.AUTH_SANCTUM'))->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 });
 
-// Define public routes
+//Define public routes
 Route::apiResource('/categories', CategoryController::class)->only(['index', 'show']);
 Route::apiResource('/posts', PostController::class)->only(['index', 'show']);
 Route::apiResource('/products', ProductController::class)->only(['index', 'show']);
 
-// Define protected routes
-Route::middleware('auth:sanctum')->group(function () {
+//Define protected routes
+Route::middleware(config('constants.AUTH_SANCTUM'))->group(function () {
     Route::apiResource('/categories', CategoryController::class)->only(['store', 'update', 'destroy']);
     Route::apiResource('/posts', PostController::class)->only(['store', 'update', 'destroy']);
     Route::apiResource('/products', ProductController::class)->only(['store', 'update', 'destroy']);
